@@ -14,13 +14,13 @@
   outline: 1px solid #16a2ff;
 }
 
-.suggestionsList {
+.suggestions-list {
   list-style-type: none;
   padding: 0px;
   margin: 0px;
 }
 
-.suggestionsList li{
+.suggestions-list li{
   padding: 1rem;
   font-size: 1rem;
   border: 2px solid #e4e4e4;

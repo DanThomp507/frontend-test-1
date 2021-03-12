@@ -38,8 +38,8 @@ const Autocomplete = ({ getProductId }) => {
         placeholder="Search for a product"
         onChange={(e) => setSearchTerm(e.target.value)}
       />
-      {suggestions.length > 0 && debouncedSearchTerm && (
-        <ul className="suggestionsList">
+      {!!suggestions.length && debouncedSearchTerm && (
+        <ul className="suggestions-list">
           {suggestions.map((item) => (
             <li key={item.id} data-testid={item.id} onClick={() => selectProduct(item.id)}>
               {item.title}
