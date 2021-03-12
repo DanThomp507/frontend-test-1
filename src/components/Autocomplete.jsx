@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDebounce } from 'use-debounce';
-
 import { fetchSuggestions } from "../utils/api";
-
 import "../styles/Autocomplete.css";
 
 const Autocomplete = ({ getProductId }) => {
@@ -14,9 +12,8 @@ const Autocomplete = ({ getProductId }) => {
     if (debouncedSearchTerm) {
       try {
         fetchSuggestions(debouncedSearchTerm).then((_suggestions) => {
-          const n = 10
-          const newArray = _suggestions.slice(0, n)
-          setSuggestions(newArray)
+          const newArray = _suggestions.slice(0, 10);
+          setSuggestions(newArray);
         }
         );
       } catch (e) {
