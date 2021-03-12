@@ -44,7 +44,7 @@ const Autocomplete = ({ getProductId }) => {
       {suggestions.length > 0 && debouncedSearchTerm && (
         <ul className="suggestionsList">
           {suggestions.map((item) => (
-            <li key={item.id} onClick={() => selectProduct(item.id)}>
+            <li key={item.id} data-testid={item.id} onClick={() => selectProduct(item.id)}>
               {item.title}
             </li>
           ))}
