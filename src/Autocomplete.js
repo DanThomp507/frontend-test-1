@@ -4,15 +4,31 @@ import { fetchSuggestions } from "./utils/api";
 
 import "./Autocomplete.css";
 
-function Autocomplete() {
-  const [searchTerm, setSearchTerm] = useState("");
+const Autocomplete = ({ getProductId }) => {
+  const [searchTerm, setSearchTerm] = useState('');
   const [suggestions, setSuggestions] = useState([]);
 
   useEffect(() => {
-    fetchSuggestions(searchTerm).then((_suggestions) =>
-      setSuggestions(_suggestions)
-    );
+    if (searchTerm) {
+      try {
+        fetchSuggestions(searchTerm).then((_suggestions) => {
+          const n = 10
+          console.log(_suggestions)
+          const newArray = _suggestions.slice(0, n)
+          setSuggestions(newArray)
+        }
+        );
+      } catch (e) {
+        console.error(e);
+      }
+    }
   }, [searchTerm]);
+
+  const selectProduct = id => {
+    getProductId(id);
+    setSearchTerm('');
+  };
+
 
   return (
     <div className="search-container">
@@ -23,7 +39,15 @@ function Autocomplete() {
         placeholder="Search for a product"
         onChange={(e) => setSearchTerm(e.target.value)}
       />
-      {/* TODO: render search suggestions */}
+      {suggestions.length > 0 && (
+        <ul className="suggestionsList">
+          {suggestions.map((item) => (
+            <li key={item.id} data-testid={item.id} onClick={(e) => selectProduct(item.id)}>
+              {item.title}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
