@@ -15,23 +15,22 @@ function ProductDetail({ productId }) {
     );
   }, [productId]);
 
+  const truncate = input => (input.length > 45 ? `${input.substring(0, 45)}...` : input);
+
   const renderProductInfo = () => {
     return (
       <div className="detail-container">
         <div className="row">
-          <img src={productInfo.image} className="product-image" />
+          <img src={productInfo.image} alt={productInfo.image} className="product-image" />
         </div>
         <div className="row">
-          <div className="row-title">Name:</div>
-          <div className="row-body">{productInfo.title}</div>
+          <div className="row-title">{productInfo.title}</div>
         </div>
         <div className="row">
-          <div className="row-title">Name:</div>
-          <div className="row-body">{productInfo.description}</div>
+          <div className="row-body">{truncate(productInfo.description)}</div>
         </div>
         <div className="row">
-          <div className="row-title">Price:</div>
-          <div className="row-body">{productInfo.price}</div>
+          <div className="row-title">{`£${productInfo.price}`}</div>
         </div>
       </div>
     );
