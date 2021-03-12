@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useDebounce } from 'use-debounce';
 
 import { fetchSuggestions } from "./utils/api";
 
@@ -7,11 +8,12 @@ import "./Autocomplete.css";
 const Autocomplete = ({ getProductId }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [suggestions, setSuggestions] = useState([]);
+  const [debouncedSearchTerm] = useDebounce(searchTerm, 500);
 
   useEffect(() => {
-    if (searchTerm) {
+    if (debouncedSearchTerm) {
       try {
-        fetchSuggestions(searchTerm).then((_suggestions) => {
+        fetchSuggestions(debouncedSearchTerm).then((_suggestions) => {
           const n = 10
           console.log(_suggestions)
           const newArray = _suggestions.slice(0, n)
@@ -22,11 +24,12 @@ const Autocomplete = ({ getProductId }) => {
         console.error(e);
       }
     }
-  }, [searchTerm]);
+  }, [searchTerm, debouncedSearchTerm]);
 
   const selectProduct = id => {
     getProductId(id);
     setSearchTerm('');
+    setSuggestions([]);
   };
 
 
@@ -42,7 +45,7 @@ const Autocomplete = ({ getProductId }) => {
       {suggestions.length > 0 && (
         <ul className="suggestionsList">
           {suggestions.map((item) => (
-            <li key={item.id} data-testid={item.id} onClick={(e) => selectProduct(item.id)}>
+            <li key={item.id} data-testid={item.id} onClick={() => selectProduct(item.id)}>
               {item.title}
             </li>
           ))}
