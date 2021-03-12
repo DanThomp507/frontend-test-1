@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 
-import { fetchProductDetail } from "./utils/api";
+import { fetchProductDetail } from "../utils/api";
 
-import "./ProductDetail.css";
+import "../styles/ProductDetail.css";
 
 function ProductDetail({ productId }) {
   const [productInfo, setProductInfo] = useState(null);
