@@ -8,11 +8,16 @@ const ProductDetail = ({ productId }) => {
   const [productInfo, setProductInfo] = useState(null);
 
   useEffect(() => {
-    if (!productId) return;
-
-    fetchProductDetail(productId).then((productInfo) =>
-      setProductInfo(productInfo)
-    );
+    const getProductDetail = async () => {
+      if (!productId) return;
+      try {
+        const productInfo = await fetchProductDetail(productId);
+        setProductInfo(productInfo);
+      } catch (e) {
+        console.error(e);
+      }
+    }
+    getProductDetail();
   }, [productId]);
 
   const truncate = input => (input.length > 45 ? `${input.substring(0, 45)}...` : input);

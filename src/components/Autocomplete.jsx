@@ -9,17 +9,17 @@ const Autocomplete = ({ getProductId }) => {
   const [debouncedSearchTerm] = useDebounce(searchTerm, 500);
 
   useEffect(() => {
-    if (debouncedSearchTerm) {
-      try {
-        fetchSuggestions(debouncedSearchTerm).then((_suggestions) => {
-          const newArray = _suggestions.slice(0, 10);
-          setSuggestions(newArray);
+    const getSearchSuggestions = async () => {
+      if (debouncedSearchTerm) {
+        try {
+          let updatedSuggestions = await fetchSuggestions(debouncedSearchTerm);
+          setSuggestions(updatedSuggestions.slice(0, 10));
+        } catch (e) {
+          console.error(e);
         }
-        );
-      } catch (e) {
-        console.error(e);
       }
-    }
+    };
+    getSearchSuggestions();
   }, [searchTerm, debouncedSearchTerm]);
 
   const selectProduct = id => {
