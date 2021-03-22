@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-
 import { fetchProductDetail } from "../utils/api";
-
+import { truncate } from "../utils/text-utils";
 import "../styles/ProductDetail.css";
 
 const ProductDetail = ({ productId }) => {
@@ -20,7 +19,6 @@ const ProductDetail = ({ productId }) => {
     getProductDetail();
   }, [productId]);
 
-  const truncate = input => (input.length > 45 ? `${input.substring(0, 45)}...` : input);
 
   const renderProductInfo = () => {
     return (
